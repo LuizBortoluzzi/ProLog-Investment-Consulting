@@ -1,6 +1,6 @@
-/**
- * Reads customer name
- **/ 
+% 
+% Reads customer name
+%  
 get_customer(NAME):-
     write("Please type exactly the customer name:"),
     nl,
@@ -11,8 +11,7 @@ get_customer(NAME):-
  * Searches customer 
  **/
 validate_customer_name(NAME):-
-    customer(NAME,_,_,_,_,_).
-
+    customer(NAME,_,_,_,_,_,_,_,_).
 
 /**
  * Prints Menu
@@ -23,13 +22,13 @@ menu():-
     nl,
     write(" -- Choose one option bellow --"),
     nl,
-    write(" 1 - Add a Customer."),
+    write(" 1 - Add a Customer"),
     nl,
     write(" 2 - Show a Customer Applications"),
     nl,
-    write(" 3 - Show a Customer Informations."),
+    write(" 3 - Show a Customer Informations"),
     nl,
-    write(" 4 - Verify Emergency Fund of a Customer."),
+    write(" 4 - Verify Emergency Fund of a Customer"),
     nl,
     write(" 5 - Verify if the customer have the minimal value for investment"),
     nl,
@@ -39,7 +38,7 @@ menu():-
     nl,
     write(" 8 - How much i'll gonna get in my applications?"),
     nl,
-    write(" 0 - Exit."),
+    write(" 0 - Exit"),
     nl,
     read(X),
     option(X),
@@ -97,7 +96,7 @@ option(X):-
 option(X):-
     X = 3,
     get_customer(NAME),
-    customer(NAME,BALANCE,MONTHLY_INCOME,RELIANTS,FINANCIAL_APPLICATIONS,VALUES,PROFILE,MONTHLY_EXPENSES), 
+    customer(NAME,BALANCE,MONTHLY_INCOME,RELIANTS,DEADLINE,APPLICATIONS,VALUES,PROFILE,MONTHLY_EXPENSES), 
     write("Name: "),
     write(NAME),
     nl,
@@ -110,10 +109,11 @@ option(X):-
     write("Reliants Quantity:"),
     write(RELIANTS),
     nl,
+    write("Deadline:"),
+    write(DEADLINE),
+    nl,
     write("Financial Aplications and Values:"),
-    nl,
     write(FINANCIAL_APPLICATIONS),
-    nl,
     write(VALUES),
     nl,
     write("Profile:"),
@@ -134,8 +134,8 @@ option(X):-
 option(X):-
     X = 4,
     get_customer(NAME),
-    customer(NAME,_,_, DEP, _, APLIC, QT_APLIC, _, DESP),
-    verify_emergency_fund( DEP, DESP, _, APLIC, QT_APLIC).
+    customer(NAME,_,_,RELIANTS,_,APPLICATIONS,VALUES,_,MONTHLY_EXPENSES), 
+    verify_emergency_fund(RELIANTS,MONTHLY_EXPENSES, _,APPLICATIONS,VALUES).
 
 /**
  * Option 5 - Verify if the customer have the minimal value for investment
@@ -143,7 +143,7 @@ option(X):-
 option(X):-
     X = 5,
     get_customer(NAME),
-    customer(NAME,BALANCE,MONTHLY_INCOME, RELIANTS, _, _, _, _),
+    customer(NAME,BALANCE,MONTHLY_INCOME,RELIANTS,_,_,_,_,_), 
     minimal_value(BALANCE,MONTHLY_INCOME,RELIANTS).
 
 /**
@@ -152,7 +152,7 @@ option(X):-
 option(X):-
     X = 6,
     get_customer(NAME),
-    customer(NAME,_,_,_, _, _, _, _), 
+    customer(NAME,_,_,_,_,_,_,_,_), 
     profile_quiz(NAME).
     
 /**
@@ -161,8 +161,8 @@ option(X):-
 option(X):-
     X = 7,
     get_customer(NAME),
-    customer(NAME,BALANCE,_,_,_,_,PROFILE,_), 
-    search_options(NAME,_,_,BALANCE).
+    customer(NAME,BALANCE,_,_,_,_,_,PROFILE,_), 
+    where_can_invest(NAME,DEADLINE,PROFILE,BALANCE).
 
 /**
  * Option 8 - How much i'll gonna get in my applications?
