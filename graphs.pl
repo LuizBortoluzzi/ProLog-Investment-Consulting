@@ -60,7 +60,7 @@ applications_graph(LIST,TOTAL) :-
  *      FINAL_LIST = Lista montada no padrão Nome/Altura/Cor a ser retornada
  *      monta_barras(LISTA_NOMES_APLICACOES, LISTA_QUANTIDADE_APLICACOES, LISTA_NOMES_CORES, FINAL_LIST):-
  **/
-bars_build([], _, _, _).
-bars_build([H|T], [H1|T1], [H2|T2], FINAL_LIST):-
-    bars_build(T,T1,T2,FINAL_LIST1),
+build_bars([], _, _, _).
+build_bars([H|T], [H1|T1], [H2|T2], FINAL_LIST):-
+    build_bars(T,T1,T2,FINAL_LIST1),
     append(FINAL_LIST1,[H/H1/H2],FINAL_LIST). 
