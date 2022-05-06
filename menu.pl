@@ -1,21 +1,23 @@
-% 
-% Reads customer name
-%  
-get_customer(NAME):-
-    write("Please type exactly the customer name:"),
-    nl,
-    read(NAME),
-    validate_customer_name(NAME).
+% % 
+% % Reads customer name
+% %  
+% get_customer(NAME):-
+%     write("Please type exactly the customer name:"),
+%     nl,
+%     read(NAME),
+%     validate_customer_name(NAME).
 
-/**
- * Searches customer 
- **/
-validate_customer_name(NAME):-
-    customer(NAME,_,_,_,_,_,_,_,_).
+% %
+% % Searches customer 
+% %
+% validate_customer_name(NAME):-
+%     customer(NAME,_,_,_,_,_,_,_,_).
 
-/**
- * Prints Menu
- **/
+
+
+%
+% Prints Menu
+%
 menu():-
     nl,
     write("##### Welcome to ProLog Investment Consulting #####"),
@@ -45,9 +47,9 @@ menu():-
     menu().
 
 
-/**
- * Option 1 - Add a Customer
- **/       
+%
+% Option 1 - Add a Customer
+%       
 option(X):-
     X = 1,
     write("Name: "),
@@ -82,17 +84,17 @@ option(X):-
     nl,!. 
 
 
-/**
- * Option 2 - Show a Customer Applications
- **/
+% 
+% Option 2 - Show a Customer Applications
+% 
 option(X):-
     X = 2,
     get_customer(NAME),
-    show_customer_applications(NAME),!.
+    show_customer_applications_values(NAME),!.
 
-/**
- * Option 3 - Show a Customer Informations
- **/   
+%
+% Option 3 - Show a Customer Informations
+%   
 option(X):-
     X = 3,
     get_customer(NAME),
@@ -113,7 +115,7 @@ option(X):-
     write(DEADLINE),
     nl,
     write("Financial Aplications and Values:"),
-    write(FINANCIAL_APPLICATIONS),
+    write(APPLICATIONS),
     write(VALUES),
     nl,
     write("Profile:"),
@@ -128,53 +130,53 @@ option(X):-
     write("Customer not found. "),
     nl,!.
 
-/**
- * Option 4 - Verify Emergency Fund of a Customer
- **/    
+% 
+% Option 4 - Verify Emergency Fund of a Customer
+%     
 option(X):-
     X = 4,
     get_customer(NAME),
     customer(NAME,_,_,RELIANTS,_,APPLICATIONS,VALUES,_,MONTHLY_EXPENSES), 
-    verify_emergency_fund(RELIANTS,MONTHLY_EXPENSES, _,APPLICATIONS,VALUES).
+    emergency_fund_middleware(RELIANTS,MONTHLY_EXPENSES, _,APPLICATIONS,VALUES).
 
-/**
- * Option 5 - Verify if the customer have the minimal value for investment
- **/       
+%
+% Option 5 - Verify if the customer have the minimal value for investment
+%       
 option(X):-
     X = 5,
     get_customer(NAME),
     customer(NAME,BALANCE,MONTHLY_INCOME,RELIANTS,_,_,_,_,_), 
-    minimal_value(BALANCE,MONTHLY_INCOME,RELIANTS).
+    minimal_value(BALANCE,MONTHLY_INCOME,RELIANTS),!.
 
-/**
- * Option 6 - Quiz to discover your profile
- **/   
+%
+% Option 6 - Quiz to discover your profile
+%   
 option(X):-
     X = 6,
     get_customer(NAME),
     customer(NAME,_,_,_,_,_,_,_,_), 
     profile_quiz(NAME).
     
-/**
- * Option 7 - Where to apply?
- **/   
+%
+%  Option 7 - Where to apply?
+%    
 option(X):-
     X = 7,
     get_customer(NAME),
-    customer(NAME,BALANCE,_,_,_,_,_,PROFILE,_), 
+    customer(NAME,BALANCE,_,_,DEADLINE,_,_,PROFILE,_), 
     where_can_invest(NAME,DEADLINE,PROFILE,BALANCE).
 
-/**
- * Option 8 - How much i'll gonna get in my applications?
- **/       
+%
+% Option 8 - How much i'll gonna get in my applications?
+%       
 option(X):-
     X = 8,
     get_customer(NAME),
     get_all_customer_application_profit(NAME).
 
-/**
- * Option 0 - Ends the execution
- **/
+%
+% Option 0 - Ends the execution
+%
 option(X):-
     X = 0,
     halt.
